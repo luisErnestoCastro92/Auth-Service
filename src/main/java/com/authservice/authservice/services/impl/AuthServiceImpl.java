@@ -7,9 +7,11 @@ import com.authservice.authservice.common.entities.UserModel;
 import com.authservice.authservice.repositories.UserRepository;
 import com.authservice.authservice.services.AuthService;
 import com.authservice.authservice.services.JwtService;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
