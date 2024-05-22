@@ -40,6 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     request.setAttribute("X-User-Id", userDetails.getId());
                     processAuthentication(request, userDetails);
                 });
+        filterChain.doFilter(request, response);
     }
 
     private void processAuthentication(HttpServletRequest request, UserModel userDetails) {

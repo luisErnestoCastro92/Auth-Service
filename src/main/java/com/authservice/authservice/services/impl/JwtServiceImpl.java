@@ -13,11 +13,11 @@ import java.util.Date;
 
 @Service
 @Slf4j
-public class JwtImpl implements JwtService {
+public class JwtServiceImpl implements JwtService {
 
     private final String secretToken;
 
-    public JwtImpl(@Value("${jwt.secret}") String secretToken) {
+    public JwtServiceImpl(@Value("${jwt.secret}") String secretToken) {
         this.secretToken = secretToken;
     }
 
@@ -36,7 +36,7 @@ public class JwtImpl implements JwtService {
     @Override
     public Claims getClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(this.secretToken)
-                .build().parseClaimsJwt(token).getBody();
+                .build().parseClaimsJws(token).getBody();
     }
 
     @Override

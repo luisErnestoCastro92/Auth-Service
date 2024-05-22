@@ -22,15 +22,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtAuthFilter jwtAuthFilter;
+
     public SecurityConfig(UserDetailsServiceImpl userDetailsService, JwtAuthFilter jwtAuthFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthFilter = jwtAuthFilter;
     }
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable).
                 cors(Customizer.withDefaults()).
-                authorizeHttpRequests(request -> request.requestMatchers("/v3/api-docs/**","/swagger-ui/**","v1/**").
+                authorizeHttpRequests(request -> request.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "v1/auth/register").
                         permitAll().
                         anyRequest().authenticated()).
                 sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
@@ -52,6 +54,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
